@@ -135,7 +135,7 @@ After running **3000 total iterations**, the following results were obtained:
 - MSE is significantly lower, meaning estimates are more reliable.
 - More trials reduce randomness, improving parameter recovery accuracy.
 
-### **$ N = 4000 $ (Large Sample)**
+### **$N = 4000$ (Large Sample)**
 
 | Metric                 | Drift Rate ($\nu$) | Boundary Separation ($\alpha$) | Non-decision Time ($\tau$) |
 | ---------------------- | ------------------ | ------------------------------ | -------------------------- |
