@@ -107,7 +107,7 @@ For each condition, two key metrics were computed:
 
 ## **Results**
 
-After running **3000 total iterations**, the following results were obtained:
+After running **3000 total iterations** on my computer, the following results were obtained:
 
 ### **$N = 10$ (Small Sample)**
 
@@ -147,6 +147,8 @@ After running **3000 total iterations**, the following results were obtained:
 - Bias is nearly zero, confirming that the model is consistent.
 - MSE is extremely low, showing excellent parameter recovery.
 - With large $N$, estimates converge to true values, proving the reliability of the EZ model when sample sizes are sufficient.
+
+**Please Note**: Due to the stochastic nature of the simulation, results may vary slightly each time the experiment is run. The values reported above correspond to one specific execution.
 
 ---
 
