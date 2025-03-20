@@ -93,9 +93,9 @@ For each condition, two key metrics were computed:
 
 - **Bias** ($b$) :
 
-  ```math
+  $$
   b = (\nu, \alpha, \tau) - (\nu^{\text{est}}, \alpha^{\text{est}}, \tau^{\text{est}})
-  ```
+  $$
 
 - **Mean Squared Error (MSE)** :
 
