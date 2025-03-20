@@ -1,4 +1,13 @@
-# src/simulate_and_recover.py
+"""
+simulate_and_recover.py
+
+This file contains the implementation of the simulation and recover process for the EZ Diffusion Model.
+- These functions and printing method details were generated with the assistance of ChatGPT o3-mini-high and ChatGPT Diffusion Models for Python Code.
+
+Author: Aiden Hai
+Date: 03/20/2025
+"""
+
 import numpy as np
 from .ez_diffusion import forward_stats, simulate_data, inverse_stats
 

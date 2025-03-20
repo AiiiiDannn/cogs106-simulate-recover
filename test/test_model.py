@@ -1,4 +1,13 @@
-# test/test_model.py
+"""
+test_model.py
+
+This file contains the implementation of the unit tests and integration tests for the EZ Diffusion Model.
+- The test codes were generated with the assistance of ChatGPT o3-mini-high and ChatGPT Diffusion Models for Python Code.
+
+Author: Aiden Hai
+Date: 03/20/2025
+"""
+
 import unittest
 import numpy as np
 import math
@@ -120,6 +129,47 @@ class TestEZDiffusion(unittest.TestCase):
         self.assertLess(mse_4000[0], mse_40[0])
         self.assertLess(mse_4000[1], mse_40[1])
         self.assertLess(mse_4000[2], mse_40[2])
+
+
+    # ========== Integration tests ==========
+    def test_full_simulation_pipeline(self):
+        """Integration Test: Ensure the full simulation pipeline works correctly."""
+        N = 100  # Moderate sample size to balance accuracy and runtime
+        iterations = 1000
+        
+        mean_bias, mse = run_simulations(N, iterations)
+
+        # Ensure outputs are finite numbers
+        self.assertTrue(np.isfinite(mean_bias).all(), "Mean Bias contains non-finite values.")
+        self.assertTrue(np.isfinite(mse).all(), "MSE contains non-finite values.")
+
+        # Ensure MSE is non-negative
+        self.assertTrue((mse >= 0).all(), "MSE values should be non-negative.")
+
+    def test_increasing_sample_size_improves_accuracy(self):
+        """Integration Test: Verify that increasing N improves parameter recovery."""
+        mean_bias_10, mse_10 = run_simulations(10, 100)
+        mean_bias_40, mse_40 = run_simulations(40, 100)
+        mean_bias_4000, mse_4000 = run_simulations(4000, 100)
+
+        # Verify that the absolute bias decreases as N increases
+        self.assertLessEqual(abs(mean_bias_40[0]), abs(mean_bias_10[0]), "Drift Rate bias should decrease")
+        self.assertLessEqual(abs(mean_bias_40[1]), abs(mean_bias_10[1]), "Boundary Separation bias should decrease")
+        self.assertLessEqual(abs(mean_bias_40[2]), abs(mean_bias_10[2]), "Non-decision Time bias should decrease")
+
+        self.assertLessEqual(abs(mean_bias_4000[0]), abs(mean_bias_40[0]), "Drift Rate bias should further decrease")
+        self.assertLessEqual(abs(mean_bias_4000[1]), abs(mean_bias_40[1]), "Boundary Separation bias should further decrease")
+        self.assertLessEqual(abs(mean_bias_4000[2]), abs(mean_bias_40[2]), "Non-decision Time bias should further decrease")
+
+        # Verify that MSE decreases as N increases
+        self.assertLessEqual(mse_40[0], mse_10[0], "Drift Rate MSE should decrease")
+        self.assertLessEqual(mse_40[1], mse_10[1], "Boundary Separation MSE should decrease")
+        self.assertLessEqual(mse_40[2], mse_10[2], "Non-decision Time MSE should decrease")
+
+        self.assertLessEqual(mse_4000[0], mse_40[0], "Drift Rate MSE should further decrease")
+        self.assertLessEqual(mse_4000[1], mse_40[1], "Boundary Separation MSE should further decrease")
+        self.assertLessEqual(mse_4000[2], mse_40[2], "Non-decision Time MSE should further decrease")
+
 
 if __name__ == "__main__":
     unittest.main()

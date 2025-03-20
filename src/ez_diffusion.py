@@ -1,4 +1,13 @@
-# src/ez_diffusion.py
+"""
+ez_diffusion.py
+
+This file contains the implementation of the equations and functions for the EZ diffusion model.
+- These functions were generated with the assistance of ChatGPT o3-mini-high and ChatGPT Diffusion Models for Python Code.
+
+Author: Aiden Hai
+Date: 03/20/2025
+"""
+
 import numpy as np
 import math
 
