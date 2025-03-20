@@ -93,9 +93,7 @@ For each condition, two key metrics were computed:
 
 - **Bias** ($b$) :
 
-  $$
-  b = (\nu, \alpha, \tau) - (\nu^{\text{est}}, \alpha^{\text{est}}, \tau^{\text{est}})
-  $$
+  $$b = (\nu, \alpha, \tau) - (\nu^{\text{est}}, \alpha^{\text{est}}, \tau^{\text{est}})$$
 
   ```math
   \left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)
@@ -103,13 +101,11 @@ For each condition, two key metrics were computed:
 
   $$\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)$$
 
-````
-
 - **Mean Squared Error (MSE)** :
 
   ```math
   MSE = \mathbb{E}[b^2]
-````
+  ```
 
 ---
 
