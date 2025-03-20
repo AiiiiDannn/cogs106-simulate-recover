@@ -20,14 +20,15 @@ To assess the model’s reliability, **1000 iterations** were conducted for each
 
 To generate realistic decision-making data, model parameters were randomly selected within predefined ranges:
 
-- **Boundary separation** \( \alpha \) : **[0.5, 2]** → The amount of evidence required for a decision.
-- **Drift rate** \( \nu \) : **[0.5, 2]** → The speed and direction of evidence accumulation.
-- **Non-decision time** \( \tau \) : **[0.1, 0.5]** → Time spent on sensory encoding and motor execution, not decision-making.
+- **Boundary separation** $ \alpha $ : **[0.5, 2]** → The amount of evidence required for a decision.
+- **Drift rate** $ \nu $ : **[0.5, 2]** → The speed and direction of evidence accumulation.
+- **Non-decision time** $ \tau $ : **[0.1, 0.5]** → Time spent on sensory encoding and motor execution, not decision-making.
 
-The **forward equations** of the EZ diffusion model were used to compute **predicted summary statistics**, where:  
-\[
+The **forward equations** of the EZ diffusion model were used to compute **predicted summary statistics**, where:
+
+$$
 y = e^{-\alpha \nu}
-\]
+$$
 
 - **Predicted accuracy rate** \( R^{\text{pred}} \) :  
   \[
