@@ -208,5 +208,6 @@ To ensure accurate diffusion model estimates, the following recommendations are 
 - Using at least **$N = 40$** for reasonable accuracy.
 - Using **$N = 4000$** for near-perfect parameter recovery.
 
-This highlights a fundamental principle in cognitive modeling:  
-**$Larger sample sizes lead to more precise and stable estimates.$**
+This highlights a fundamental principle in cognitive modeling:
+
+> **Larger sample sizes lead to more precise and stable estimates.**
