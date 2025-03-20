@@ -10,7 +10,7 @@ The goal of this experiment is to evaluate the **consistency** of the EZ diffusi
 2. **Recovering those parameters** using inverse equations.
 3. **Analyzing estimation accuracy** using **bias** and **mean squared error (MSE)**.
 
-To assess the model’s reliability, **1000 iterations** were conducted for each of three different sample sizes: **\( N = 10, 40, 4000 \)**.
+To assess the model’s reliability, **1000 iterations** were conducted for each of three different sample sizes: **$N = 10, 40, 4000$**.
 
 ---
 
@@ -20,9 +20,9 @@ To assess the model’s reliability, **1000 iterations** were conducted for each
 
 To generate realistic decision-making data, model parameters were randomly selected within predefined ranges:
 
-- **Boundary separation** $\alpha$ : **[0.5, 2]** → The amount of evidence required for a decision.
-- **Drift rate** $\nu$ : **[0.5, 2]** → The speed and direction of evidence accumulation.
-- **Non-decision time** $\tau$ : **[0.1, 0.5]** → Time spent on sensory encoding and motor execution, not decision-making.
+- **Boundary separation $\alpha$** : **[0.5, 2]** → The amount of evidence required for a decision.
+- **Drift rate $\nu$** : **[0.5, 2]** → The speed and direction of evidence accumulation.
+- **Non-decision time $\tau$** : **[0.1, 0.5]** → Time spent on sensory encoding and motor execution, not decision-making.
 
 The **forward equations** of the EZ diffusion model were used to compute **predicted summary statistics**, where:
 
@@ -32,31 +32,29 @@ $$
 
 - **Predicted accuracy rate** **$ R^{\text{pred}} $** :
 
+  <div align="center">
   $$R^{\text{pred}} = \frac{1}{1 + y}$$
+  </div>
 
 - **Predicted mean response time** **$ M^{\text{pred}} $** :
 
-  $$
-  M^{\text{pred}} = \tau + \frac{\alpha}{2\nu} \cdot \frac{1 - y}{1 + y}
-  $$
+  $$M^{\text{pred}} = \tau + \frac{\alpha}{2\nu} \cdot \frac{1 - y}{1 + y}$$
 
 - **Predicted variance of response time** **$ V^{\text{pred}} $** :
 
-  $$
-  V^{\text{pred}} = \frac{\alpha}{2 \nu^3} \cdot \frac{1 - 2 \alpha \nu y - y^2}{(1 + y)^2}
-  $$
+  $$V^{\text{pred}} = \frac{\alpha}{2 \nu^3} \cdot \frac{1 - 2 \alpha \nu y - y^2}{(1 + y)^2}$$
 
 Using these **predicted values**, observed data was simulated as follows:
 
-- **Accuracy** ($R^{\text{obs}}$) was drawn from a binomial distribution.
-- **Mean RT** ($M^{\text{obs}}$) was sampled from a normal distribution.
-- **Variance RT** ($V^{\text{obs}}$) followed a gamma distribution.
+- **Accuracy** (**$R^{\text{obs}}$**) was drawn from a binomial distribution.
+- **Mean RT** (**$M^{\text{obs}}$**) was sampled from a normal distribution.
+- **Variance RT** (**$V^{\text{obs}}$**) followed a gamma distribution.
 
 ### **2. Recovering Parameters**
 
-The **inverse equations** of the EZ diffusion model were used to estimate parameters from observed data. Given **\( R^{\text{obs}}, M^{\text{obs}}, V^{\text{obs}} \)**, the original parameters were estimated as follows:
+The **inverse equations** of the EZ diffusion model were used to estimate parameters from observed data. Given **$R^{\text{obs}}$, $M^{\text{obs}}$, and $V^{\text{obs}}$**, the original parameters were estimated as follows:
 
-- **Estimated drift rate** $\nu^{\text{est}}$ :
+- **Estimated drift rate $\nu^{\text{est}}$** :
 
   $$
   v^{\text{est}} = \text{sgn} \left( R^{\text{obs}} - \frac{1}{2} \right)
@@ -65,24 +63,17 @@ The **inverse equations** of the EZ diffusion model were used to estimate parame
 
   where
 
-  $$
-  L = \ln \left( \frac{R^{\text{obs}}}{1 - R^{\text{obs}}} \right)
-  $$
+  $$L = \ln \left( \frac{R^{\text{obs}}}{1 - R^{\text{obs}}} \right)$$
 
-- **Estimated boundary separation** $\alpha^{\text{est}}$ :
+- **Estimated boundary separation $\alpha^{\text{est}}$** :
 
-  $$
-  \alpha^{\text{est}} = \frac{L}{\nu^{\text{est}}}
-  $$
+  $$\alpha^{\text{est}} = \frac{L}{\nu^{\text{est}}}$$
 
-- **Estimated non-decision time** $\tau^{\text{est}}$ :
+- **Estimated non-decision time $\tau^{\text{est}}$** :
 
-  $$
-  \tau^{\text{est}} = M^{\text{obs}} - \frac{\alpha^{\text{est}}}{2 \nu^{\text{est}}} \cdot \frac{1 - e^{-\nu^{\text{est}} \alpha^{\text{est}}}}{1 + e^{-\nu^{\text{est}} \alpha^{\text{est}}}}
-  ```
-  $$
+  $$\tau^{\text{est}} = M^{\text{obs}} - \frac{\alpha^{\text{est}}}{2 \nu^{\text{est}}} \cdot \frac{1 - e^{-\nu^{\text{est}} \alpha^{\text{est}}}}{1 + e^{-\nu^{\text{est}} \alpha^{\text{est}}}}$$
 
-Each **simulate-and-recover process** was repeated **1000 times** for each sample size (\( N \)):
+Each **simulate-and-recover process** was repeated **1000 times** for each sample size ( **$N$** ):
 
 - **$N = 10$** → Small sample, high variability.
 - **$N = 40$** → Moderate sample, better accuracy.
@@ -126,7 +117,7 @@ After running **3000 total iterations**, the following results were obtained:
 
 **Interpretation:**
 
-- Bias is much smaller compared to $ N = 10 $.
+- Bias is much smaller compared to $N = 10$.
 - MSE is significantly lower, meaning estimates are more reliable.
 - More trials reduce randomness, improving parameter recovery accuracy.
 
