@@ -26,27 +26,25 @@ To generate realistic decision-making data, model parameters were randomly selec
 
 The **forward equations** of the EZ diffusion model were used to compute **predicted summary statistics**, where:
 
-```math
+$$
 y = e^{-\alpha \nu}
-```
+$$
 
 - **Predicted accuracy rate** **$ R^{\text{pred}} $** :
 
-  ```math
-  R^{\text{pred}} = \frac{1}{1 + y}
-  ```
+  $$R^{\text{pred}} = \frac{1}{1 + y}$$
 
 - **Predicted mean response time** **$ M^{\text{pred}} $** :
 
-  ```math
+  $$
   M^{\text{pred}} = \tau + \frac{\alpha}{2\nu} \cdot \frac{1 - y}{1 + y}
-  ```
+  $$
 
 - **Predicted variance of response time** **$ V^{\text{pred}} $** :
 
-  ```math
+  $$
   V^{\text{pred}} = \frac{\alpha}{2 \nu^3} \cdot \frac{1 - 2 \alpha \nu y - y^2}{(1 + y)^2}
-  ```
+  $$
 
 Using these **predicted values**, observed data was simulated as follows:
 
@@ -60,28 +58,29 @@ The **inverse equations** of the EZ diffusion model were used to estimate parame
 
 - **Estimated drift rate** $\nu^{\text{est}}$ :
 
-  ```math
+  $$
   v^{\text{est}} = \text{sgn} \left( R^{\text{obs}} - \frac{1}{2} \right)
   \cdot \sqrt[4]{\frac{L \left( R^{\text{obs}^2} L - R^{\text{obs}} L + R^{\text{obs}} - \frac{1}{2} \right)}{V^{\text{obs}}}}
-  ```
+  $$
 
   where
 
-  ```math
+  $$
   L = \ln \left( \frac{R^{\text{obs}}}{1 - R^{\text{obs}}} \right)
-  ```
+  $$
 
 - **Estimated boundary separation** $\alpha^{\text{est}}$ :
 
-  ```math
+  $$
   \alpha^{\text{est}} = \frac{L}{\nu^{\text{est}}}
-  ```
+  $$
 
 - **Estimated non-decision time** $\tau^{\text{est}}$ :
 
-  ```math
+  $$
   \tau^{\text{est}} = M^{\text{obs}} - \frac{\alpha^{\text{est}}}{2 \nu^{\text{est}}} \cdot \frac{1 - e^{-\nu^{\text{est}} \alpha^{\text{est}}}}{1 + e^{-\nu^{\text{est}} \alpha^{\text{est}}}}
   ```
+  $$
 
 Each **simulate-and-recover process** was repeated **1000 times** for each sample size (\( N \)):
 
@@ -95,17 +94,9 @@ For each condition, two key metrics were computed:
 
   $$b = (\nu, \alpha, \tau) - (\nu^{\text{est}}, \alpha^{\text{est}}, \tau^{\text{est}})$$
 
-  ```math
-  \left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)
-  ```
-
-  $$\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)$$
-
 - **Mean Squared Error (MSE)** :
 
-  ```math
-  MSE = \mathbb{E}[b^2]
-  ```
+  $$MSE = \mathbb{E}[b^2]$$
 
 ---
 
