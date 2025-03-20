@@ -21,8 +21,8 @@ To assess the model’s reliability, **1000 iterations** were conducted for each
 To generate realistic decision-making data, model parameters were randomly selected within predefined ranges:
 
 - **Boundary separation** $\alpha$ : **[0.5, 2]** → The amount of evidence required for a decision.
-- **Drift rate** $ \nu $ : **[0.5, 2]** → The speed and direction of evidence accumulation.
-- **Non-decision time** $ \tau $ : **[0.1, 0.5]** → Time spent on sensory encoding and motor execution, not decision-making.
+- **Drift rate** $\nu$ : **[0.5, 2]** → The speed and direction of evidence accumulation.
+- **Non-decision time** $\tau$ : **[0.1, 0.5]** → Time spent on sensory encoding and motor execution, not decision-making.
 
 The **forward equations** of the EZ diffusion model were used to compute **predicted summary statistics**, where:
 
@@ -30,68 +30,73 @@ $$
 y = e^{-\alpha \nu}
 $$
 
-- **Predicted accuracy rate** \( R^{\text{pred}} \) :  
-  \[
+- **Predicted accuracy rate** $ R^{\text{pred}} $ :
+  $$
   R^{\text{pred}} = \frac{1}{1 + y}
-  \]
-- **Predicted mean response time** \( M^{\text{pred}} \) :  
-  \[
+  $$
+- **Predicted mean response time** $ M^{\text{pred}} $ :
+  $$
   M^{\text{pred}} = \tau + \frac{\alpha}{2\nu} \cdot \frac{1 - y}{1 + y}
-  \]
-- **Predicted variance of response time** \( V^{\text{pred}} \) :  
-  \[
+  $$
+- **Predicted variance of response time** $ V^{\text{pred}} $ :
+  $$
   V^{\text{pred}} = \frac{\alpha}{2 \nu^3} \cdot \frac{1 - 2 \alpha \nu y - y^2}{(1 + y)^2}
-  \]
+  $$
 
 Using these **predicted values**, observed data was simulated as follows:
 
-- **Accuracy** (\( R^{\text{obs}} \)) was drawn from a binomial distribution.
-- **Mean RT** (\( M^{\text{obs}} \)) was sampled from a normal distribution.
-- **Variance RT** (\( V^{\text{obs}} \)) followed a gamma distribution.
+- **Accuracy** ($R^{\text{obs}}$) was drawn from a binomial distribution.
+- **Mean RT** ($M^{\text{obs}}$) was sampled from a normal distribution.
+- **Variance RT** ($V^{\text{obs}}$) followed a gamma distribution.
 
 ### **2. Recovering Parameters**
 
 The **inverse equations** of the EZ diffusion model were used to estimate parameters from observed data. Given **\( R^{\text{obs}}, M^{\text{obs}}, V^{\text{obs}} \)**, the original parameters were estimated as follows:
 
-- **Estimated drift rate** \( \nu^{\text{est}} \) :
+- **Estimated drift rate** $\nu^{\text{est}}$ :
 
-  \[
+  $$
   v^{\text{est}} = \text{sgn} \left( R^{\text{obs}} - \frac{1}{2} \right)
   \cdot \sqrt[4]{\frac{L \left( R^{\text{obs}^2} L - R^{\text{obs}} L + R^{\text{obs}} - \frac{1}{2} \right)}{V^{\text{obs}}}}
-  \]
+  $$
 
   where
 
-  \[
+  $$
   L = \ln \left( \frac{R^{\text{obs}}}{1 - R^{\text{obs}}} \right)
-  \]
+  $$
 
-- **Estimated boundary separation** \( \alpha^{\text{est}} \) :  
-  \[
+- **Estimated boundary separation** $\alpha^{\text{est}}$ :
+
+  $$
   \alpha^{\text{est}} = \frac{L}{\nu^{\text{est}}}
-  \]
+  $$
 
-- **Estimated non-decision time** \( \tau^{\text{est}} \) :  
-  \[
+- **Estimated non-decision time** $\tau^{\text{est}}$ :
+
+  $$
   \tau^{\text{est}} = M^{\text{obs}} - \frac{\alpha^{\text{est}}}{2 \nu^{\text{est}}} \cdot \frac{1 - e^{-\nu^{\text{est}} \alpha^{\text{est}}}}{1 + e^{-\nu^{\text{est}} \alpha^{\text{est}}}}
-  \]
+  $$
 
 Each **simulate-and-recover process** was repeated **1000 times** for each sample size (\( N \)):
 
-- **\( N = 10 \)** → Small sample, high variability.
-- **\( N = 40 \)** → Moderate sample, better accuracy.
-- **\( N = 4000 \)** → Large sample, best accuracy.
+- ** $N = 10$ ** → Small sample, high variability.
+- ** $N = 40$ ** → Moderate sample, better accuracy.
+- ** $N = 4000$ ** → Large sample, best accuracy.
 
 For each condition, two key metrics were computed:
 
-- **Bias** (\( b \)) :  
-  \[
+- **Bias** ($b$) :
+
+  $$
   b = (\nu, \alpha, \tau) - (\nu^{\text{est}}, \alpha^{\text{est}}, \tau^{\text{est}})
-  \]
-- **Mean Squared Error (MSE)** :  
-  \[
+  $$
+
+- **Mean Squared Error (MSE)** :
+
+  $$
   MSE = \mathbb{E}[b^2]
-  \]
+  $$
 
 ---
 
@@ -99,12 +104,12 @@ For each condition, two key metrics were computed:
 
 After running **3000 total iterations**, the following results were obtained:
 
-### **\( N = 10 \) (Small Sample)**
+### **$N = 10$ (Small Sample)**
 
-| Metric                 | Drift Rate \( \nu \) | Boundary Separation \( \alpha \) | Non-decision Time \( \tau \) |
-| ---------------------- | -------------------- | -------------------------------- | ---------------------------- |
-| **Mean Bias**          | -0.3195              | -0.5674                          | 0.0629                       |
-| **Mean Squared Error** | 1.1071               | 2.0596                           | 0.0637                       |
+| Metric                 | Drift Rate ($\nu$) | Boundary Separation ($\alpha$) | Non-decision Time ($\tau$) |
+| ---------------------- | ------------------ | ------------------------------ | -------------------------- |
+| **Mean Bias**          | -0.3195            | -0.5674                        | 0.0629                     |
+| **Mean Squared Error** | 1.1071             | 2.0596                         | 0.0637                     |
 
 **Interpretation:**
 
@@ -112,25 +117,25 @@ After running **3000 total iterations**, the following results were obtained:
 - MSE is high, indicating high variability in parameter recovery.
 - Small sample sizes lead to high estimation errors due to increased randomness.
 
-### **\( N = 40 \) (Moderate Sample)**
+### **$N = 40$ (Moderate Sample)**
 
-| Metric                 | Drift Rate \( \nu \) | Boundary Separation \( \alpha \) | Non-decision Time \( \tau \) |
-| ---------------------- | -------------------- | -------------------------------- | ---------------------------- |
-| **Mean Bias**          | -0.0389              | -0.1099                          | 0.0167                       |
-| **Mean Squared Error** | 0.1447               | 0.3288                           | 0.0109                       |
+| Metric                 | Drift Rate ($\nu$) | Boundary Separation ($\alpha$) | Non-decision Time ($\tau$) |
+| ---------------------- | ------------------ | ------------------------------ | -------------------------- |
+| **Mean Bias**          | -0.0389            | -0.1099                        | 0.0167                     |
+| **Mean Squared Error** | 0.1447             | 0.3288                         | 0.0109                     |
 
 **Interpretation:**
 
-- Bias is much smaller compared to \( N = 10 \).
+- Bias is much smaller compared to $ N = 10 $.
 - MSE is significantly lower, meaning estimates are more reliable.
 - More trials reduce randomness, improving parameter recovery accuracy.
 
-### **\( N = 4000 \) (Large Sample)**
+### **$ N = 4000 $ (Large Sample)**
 
-| Metric                 | Drift Rate \( \nu \) | Boundary Separation \( \alpha \) | Non-decision Time \( \tau \) |
-| ---------------------- | -------------------- | -------------------------------- | ---------------------------- |
-| **Mean Bias**          | 0.0008               | 0.0004                           | -0.0002                      |
-| **Mean Squared Error** | 0.0013               | 0.0001                           | 0.0000                       |
+| Metric                 | Drift Rate ($\nu$) | Boundary Separation ($\alpha$) | Non-decision Time ($\tau$) |
+| ---------------------- | ------------------ | ------------------------------ | -------------------------- |
+| **Mean Bias**          | 0.0008             | 0.0004                         | -0.0002                    |
+| **Mean Squared Error** | 0.0013             | 0.0001                         | 0.0000                     |
 
 **Interpretation:**
 
